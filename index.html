@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sequential Video Player with Controls</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+      color: #fff;
+    }
+    video {
+      width: 80%;
+      max-width: 800px;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .controls {
+      display: flex;
+      gap: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #444;
+      color: #fff;
+    }
+    button:disabled {
+      background-color: #777;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <video id="videoPlayer" controls autoplay></video>
+
+  <div class="controls">
+    <button id="prevBtn">이전</button>
+    <span id="videoCounter">1 / 25</span>
+    <button id="nextBtn">다음</button>
+  </div>
+
+  <script>
+    const videoPlayer = document.getElementById('videoPlayer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const videoCounter = document.getElementById('videoCounter');
+    
+    const totalVideos = 25;
+    let currentVideoIndex = 1;
+
+    function playVideo(index) {
+      videoPlayer.src = `video (${index}).mp4`;
+      videoPlayer.load();
+      videoPlayer.play();
+      updateControls();
+    }
+
+    function updateControls() {
+      prevBtn.disabled = currentVideoIndex === 1;
+      nextBtn.disabled = currentVideoIndex === totalVideos;
+      videoCounter.textContent = `${currentVideoIndex} / ${totalVideos}`;
+    }
+
+    // 비디오 끝나면 자동으로 다음 비디오 재생
+    videoPlayer.addEventListener('ended', () => {
+      if (currentVideoIndex < totalVideos) {
+        currentVideoIndex++;
+        playVideo(currentVideoIndex);
+      } else {
+        alert('모든 비디오가 재생되었습니다!');
+      }
+    });
+
+    // 이전 버튼 클릭 시
+    prevBtn.addEventListener('click', () => {
+      if (currentVideoIndex > 1) {
+        currentVideoIndex--;
+        playVideo(currentVideoIndex);
+      }
+    });
+
+    // 다음 버튼 클릭 시
+    nextBtn.addEventListener('click', () => {
+      if (currentVideoIndex < totalVideos) {
+        currentVideoIndex++;
+        playVideo(currentVideoIndex);
+      }
+    });
+
+    // 첫 번째 비디오 재생 시작
+    playVideo(currentVideoIndex);
+  </script>
+
+</body>
+</html>
