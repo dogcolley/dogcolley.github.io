@@ -1,0 +1,11 @@
+header, footer {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
