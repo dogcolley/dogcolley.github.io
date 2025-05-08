@@ -1,3 +1,10 @@
 title: BoardWiki Korea
-markdown: kramdown
+baseurl: ""  # 루트 경로로 설정
+url: "https://boardwikikorea.github.io"  # GitHub Pages 도메인
+
 theme: minima
+markdown: kramdown
+
+# Build settings
+plugins:
+  - jekyll-seo-tag
